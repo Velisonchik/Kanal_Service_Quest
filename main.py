@@ -10,7 +10,7 @@ from datetime import datetime
 from psycopg2 import Error
 
 
-def get_md5(filename):
+def get_md5(filename): #Получаем md5 у передаваемого файла
     md5_hash = hashlib.md5()
     with open(filename, "rb") as f:
         # Read and update hash in chunks of 4K
@@ -19,7 +19,7 @@ def get_md5(filename):
         return md5_hash.hexdigest()
 
 
-def get_usd_price():
+def get_usd_price():# Получаем текущий курс и возваращем float
     res = requests.get('https://www.cbr.ru/scripts/XML_daily.asp?date_req=' + datetime.now().strftime(("%d/%m/%Y")))
     res = ET.fromstring(res.text)
     for child in res.iter('Valute'):
@@ -27,7 +27,7 @@ def get_usd_price():
             return float(child[4].text.replace(',', '.'))
 
 
-def check_file(filename, refresh=False):
+def check_file(filename, refresh=False): # Проверка файла с таблицей и вызов функции insert_DB_from_sheet_file()
     if os.path.exists(filename):
         with open(filename + '.temp', 'wb') as f:
             f.write(export(google_file_ID))
@@ -45,7 +45,7 @@ def check_file(filename, refresh=False):
             insert_DB_from_sheet_file()
 
 
-def query_db(q):
+def query_db(q): # запросы к базе
     try:
         connection = psycopg2.connect(user=user_db,
                                       password=passwd_db,
@@ -65,7 +65,7 @@ def query_db(q):
             connection.close()
 
 
-def insert_DB_from_sheet_file(truncate=False):
+def insert_DB_from_sheet_file(truncate=False): # собственно сам insert
     if truncate:
         query_db('TRUNCATE main;')
     with open(sheet_file) as f:
