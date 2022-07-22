@@ -7,3 +7,7 @@
 (Смотреть вот сюда: https://cloud.google.com/docs/authentication/getting-started)
 
 2. Заполненный proj_requests.py
+
+
+
+** Мой файл таблиц https://docs.google.com/spreadsheets/d/11N5RSvMFZg2hNA5tk0TCWRWNn-IAZdAKXC0HaFfo_cQ/edit#gid=0
